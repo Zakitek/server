@@ -2,7 +2,7 @@ require("dotenv").config({ path: "./config.env" });
 require("./src/db/mongoose");
 
 const express = require("express");
-const port = 5000 || process.env.PORT;
+const port = process.env.PORT || 5000;
 const app = express();
 const cors = require("cors");
 const userRouter = require("./src/routers/user");
@@ -15,6 +15,9 @@ app.use(express.json());
 app.use("/users", userRouter);
 app.use("/orders", orderRouter);
 app.use(mealRouter);
+app.use("/", (req, res) => {
+    res.send("Welcome to the server home page.");
+});
 
 app.use((req, res) => {
     res.status(404).send("<h1>Page not found 404</h1>");
